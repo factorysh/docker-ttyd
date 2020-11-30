@@ -17,8 +17,7 @@ images: image-tmux image-ttyd
 run-tmux:
 	mkdir -p tmp
 	docker run \
-		-t \
-		-d \
+		-tid \
 		--rm \
 		--name tmux \
 		-u `id -u` \
@@ -32,6 +31,7 @@ run-ttyd:
 		-t \
 		-d \
 		--rm \
+		--name ttyd \
 		-v `pwd`/tmp:/tmp/tmux \
 		-e TMUX_TMPDIR=/tmp/tmux \
 		-u `id -u` \
@@ -40,4 +40,9 @@ run-ttyd:
 		ttyd
 
 run: | run-tmux run-ttyd
-	docker exec -ti tmux tmux attach
+	docker attach tmux
+
+down:
+	docker kill ttyd
+	docker kill tmux
+

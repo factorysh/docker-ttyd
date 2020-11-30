@@ -34,3 +34,7 @@ RUN set -eux \
     &&  rm -rf /var/lib/apt/lists/*
 
 COPY --from=dev /src/ttyd/build/ttyd /usr/local/bin/
+COPY start.sh /start.sh
+EXPOSE 7681
+
+CMD /start.sh

@@ -44,6 +44,6 @@ run: | run-tmux run-ttyd
 	docker attach tmux
 
 down:
-	docker kill ttyd
 	docker kill tmux
+	docker kill ttyd
 

@@ -1,4 +1,5 @@
 TTYD_VERSION=1.6.1
+CREDENTIAL:=beuha:aussi
 
 image-ttyd:
 	docker build \
@@ -35,8 +36,8 @@ run-ttyd:
 		-v `pwd`/tmp:/tmp/tmux \
 		-e TMUX_TMPDIR=/tmp/tmux \
 		-u `id -u` \
-		-p 7681:7681 \
-		-e CREDENTIAL=beuha:aussi \
+		-p 127.0.0.1:7681:7681 \
+		-e CREDENTIAL=$(CREDENTIAL) \
 		ttyd
 
 run: | run-tmux run-ttyd

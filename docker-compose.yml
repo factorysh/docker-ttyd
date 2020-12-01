@@ -1,0 +1,31 @@
+---
+
+version: "3.8"
+
+services:
+  tmux:
+    image: tmux
+    tty: true
+    user: ${UID}
+    environment:
+      TMUX_TMPDIR: /tmp/tmux
+      COLUMNS: ${COLUMNS}
+      LINES: ${LINES}
+    volumes:
+      - ./tmp:/tmp/tmux
+
+  ttyd:
+    image: ttyd
+    tty: true
+    user: ${UID}
+    environment:
+      TMUX_TMPDIR: /tmp/tmux
+      CREDENTIAL: ${CREDENTIAL}
+      COLUMNS: ${COLUMNS}
+      LINES: ${LINES}
+    volumes:
+      - ./tmp:/tmp/tmux
+    ports:
+      - 127.0.0.1:7681:7681
+    depends_on:
+      - tmux

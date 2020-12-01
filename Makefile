@@ -40,10 +40,12 @@ run-ttyd:
 		-e CREDENTIAL=$(CREDENTIAL) \
 		ttyd
 
-run: | run-tmux run-ttyd
-	docker attach tmux
+up:
+	echo "UID=`id -u`\nCREDENTIAL=$(CREDENTIAL)\nCOLUMNS=`tput cols`\nLINES=`tput lines`" > .env
+	docker-compose up -d ttyd
+	docker-compose ps
+	docker-compose run -e COLUMNS=`tput cols` tmux tmux attach
 
 down:
-	docker kill tmux
-	docker kill ttyd
+	docker-compose down
 

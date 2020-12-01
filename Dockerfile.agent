@@ -1,0 +1,16 @@
+FROM bearstech/debian:10
+
+RUN apt-get update &&\
+        apt-get install -y \
+            openssh-client \
+            gosu \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG UID
+RUN useradd -m agent --uid "${UID}" --shell /bin/bash
+
+VOLUME /secret
+
+ENV SSH_AUTH_SOCK /secret/ssh-agent.sock
+
+CMD chown -R agent /secret && gosu agent ssh-agent -a /secret/ssh-agent.sock -D

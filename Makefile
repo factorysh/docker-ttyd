@@ -10,18 +10,34 @@ image-ttyd:
 image-tmux:
 	docker build \
 		-t tmux \
+		--build-arg UID=`id -u` \
 		-f Dockerfile.tmux \
 		.
 
-images: image-tmux image-ttyd
+image-agent:
+	docker build \
+		-t ttyd-agent \
+		--build-arg UID=`id -u` \
+		-f Dockerfile.agent \
+	.
+
+images: image-tmux image-ttyd image-agent
+
+run-agent:
+	docker run \
+		--rm \
+		-d \
+		--name=ttyd-agent \
+		ttyd-agent
 
 run-tmux:
 	mkdir -p tmp
 	docker run \
 		-tid \
 		--rm \
+		--volumes-from=ttyd-agent \
 		--name tmux \
-		-u `id -u` \
+		-e SSH_AUTH_SOCK=/secret/ssh-agent.sock \
 		-e TMUX_TMPDIR=/tmp/tmux \
 		-v `pwd`/tmp:/tmp/tmux \
 		tmux
@@ -40,10 +56,11 @@ run-ttyd:
 		-e CREDENTIAL=$(CREDENTIAL) \
 		ttyd
 
-run: | run-tmux run-ttyd
+run: | run-agent run-tmux run-ttyd
 	docker attach tmux
 
 down:
+	docker kill ttyd-agent
 	docker kill tmux
 	docker kill ttyd
 

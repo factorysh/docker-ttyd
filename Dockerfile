@@ -27,6 +27,7 @@ FROM bearstech/debian:10
 RUN set -eux \
     &&  apt-get update \
     &&  apt-get install -y --no-install-recommends \
+            dumb-init \
             libjson-c3\
             libwebsockets8 \
             tmux \
@@ -37,4 +38,5 @@ COPY --from=dev /src/ttyd/build/ttyd /usr/local/bin/
 COPY start.sh /start.sh
 EXPOSE 7681
 
+ENTRYPOINT ["dumb-init"]
 CMD /start.sh

@@ -7,4 +7,6 @@ RUN set -eux \
     &&  apt-get clean \
     &&  rm -rf /var/lib/apt/lists/*
 
-CMD tmux
+ENV SHELL=/bin/bash
+
+CMD ["tmux"]

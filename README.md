@@ -19,3 +19,19 @@ Lets add tmux for multiple viewer and splitted terms.
     make run
 
 You are in a tmux, open http://localhost:7681/ with credentials hidden in Makefile.
+
+```
+
++------+            +-------------+
+| tmux +------------+ socket tmux |
++------+            +------+------+
+                           |
++-----------------+        |
+| ttyd            |        |
+| +-------------+ |        |
+| | tmux attach +-+--------+
+| +-------------+ | ws
+|                 +----------------------> browser
++-----------------+
+
+```

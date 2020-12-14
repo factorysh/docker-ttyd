@@ -1,4 +1,4 @@
-TTYD_VERSION=1.6.1
+TTYD_VERSION=1.6.2
 CREDENTIAL:=beuha:aussi
 
 image-ttyd:

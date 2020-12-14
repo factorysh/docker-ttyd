@@ -27,6 +27,7 @@ run-agent:
 	docker run \
 		--rm \
 		-d \
+		-h ssh-agent \
 		--name=ttyd-agent \
 		ttyd-agent
 
@@ -35,6 +36,7 @@ run-tmux:
 	docker run \
 		-tid \
 		--rm \
+		-h tmux \
 		--volumes-from=ttyd-agent \
 		--name tmux \
 		-e SSH_AUTH_SOCK=/secret/ssh-agent.sock \
@@ -48,6 +50,7 @@ run-ttyd:
 		-t \
 		-d \
 		--rm \
+		-h ttyd \
 		--name ttyd \
 		-v `pwd`/tmp:/tmp/tmux \
 		-e TMUX_TMPDIR=/tmp/tmux \

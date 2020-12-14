@@ -6,4 +6,4 @@ docker run \
     -u `id -u` \
     --volumes-from=ttyd-agent \
     -v $1:/the_key \
-    ttyd-agent bash -c "ssh-add /the_key"
+    ttyd-agent ssh-add -t 1h /the_key

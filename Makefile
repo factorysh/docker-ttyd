@@ -33,6 +33,7 @@ run-agent:
 
 run-tmux:
 	mkdir -p tmp
+	mkdir -p home
 	docker run \
 		-tid \
 		--rm \
@@ -42,6 +43,8 @@ run-tmux:
 		-e SSH_AUTH_SOCK=/secret/ssh-agent.sock \
 		-e TMUX_TMPDIR=/tmp/tmux \
 		-v `pwd`/tmp:/tmp/tmux \
+		-v `pwd`/home:/home/user \
+		-w /home/user \
 		tmux
 
 run-ttyd:

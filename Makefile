@@ -66,7 +66,5 @@ run: | run-agent run-tmux run-ttyd
 	docker attach tmux
 
 down:
-	docker kill ttyd-agent
-	docker kill tmux
-	docker kill ttyd
+	docker kill ttyd-agent tmux ttyd
 
